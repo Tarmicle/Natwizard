@@ -1,0 +1,29 @@
+ System.out.println(args[0]);
+
+        Options options;
+        options = new Options();
+        Option mask = Option.builder(MASK).longOpt(L_MASK)
+                .required(false)
+                .hasArgs()
+                .optionalArg(false)
+                .argName("ip mask")
+                .numberOfArgs(2)
+                .valueSeparator(' ')
+                .build();
+        options.addOption(mask);
+
+        // create the parser
+        CommandLineParser parser = new DefaultParser();
+        try {
+            // parse the command line arguments
+            CommandLine line = parser.parse(options, args);
+            if (line.hasOption(MASK)) {
+                String[] customerIdArray = line.getOptionValues(MASK);
+                System.out.println(customerIdArray[0]);
+            }
+            new HelpFormatter().printHelp("NetWizard", options);
+        } catch (ParseException exp) {
+            // oops, something went wrong
+            System.err.println(exp.getMessage());
+            new HelpFormatter().printHelp("NetWizard", options);
+        }
