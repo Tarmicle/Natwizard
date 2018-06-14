@@ -28,7 +28,7 @@ public class IPv4Subnet {
         int nOfHost = (int) (max.binaryValue ^ min.binaryValue);
         mask = 32 - AlgorithmUtils.findMostSignificantBit32(nOfHost);
         hosts = iPv4Addresses;
-        availableHosts = (int) Math.pow(2, mask);
+        availableHosts = (int) Math.pow(2, 32 - mask);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class IPv4Subnet {
         return (int) (Math.log(x) / Math.log(2));
     }
 
-    public int getMask(){
+    public int getMask() {
         return mask;
     }
 }

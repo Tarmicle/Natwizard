@@ -1,6 +1,9 @@
 import model.AlgorithmUtils;
 import model.IPv4Address;
 import model.IPv4Subnet;
+import model.MacAddress;
+import model.exception.InvalidMacAddressException;
+import model.osi.Layer2.EthPack_802_3;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,7 +28,7 @@ public class ConsoleArgsTest {
 
     @Test
     public void ipSubnetByIPs() {
-        System.out.println(new IPv4Subnet(new IPv4Address("192.168.1.1"), new IPv4Address("192.168.1.2")).availableHosts);
+        Assert.assertEquals(4, new IPv4Subnet(new IPv4Address("192.168.1.1"), new IPv4Address("192.168.1.2")).availableHosts);
     }
 
     @Test
@@ -37,7 +40,17 @@ public class ConsoleArgsTest {
     @Test
     public void testSubnet() {
         IPv4Subnet subnet = new IPv4Subnet(new IPv4Address("102.168.1.20"), new IPv4Address("102.168.1.3"));
-        System.out.println(subnet.getMask());
+    }
+
+    @Test
+    public void macAddressErrorCheck() {
+        try {
+            EthPack_802_3.builder().setDestinationMAC(new MacAddress(0x02, 0x03, 0x04, 0x05, 0x06));
+        } catch (InvalidMacAddressException e) {
+            Assert.assertEquals(true, true);
+            return;
+        }
+        Assert.assertEquals(false, true);
     }
 
 }
