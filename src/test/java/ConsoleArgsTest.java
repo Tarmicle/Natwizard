@@ -53,4 +53,27 @@ public class ConsoleArgsTest {
         Assert.assertEquals(false, true);
     }
 
+    @Test
+    public void subnetGenerationTest() {
+        IPv4Subnet subnet = new IPv4Subnet(new IPv4Address("192.168.1.1"), new IPv4Address("192.168.1.2"));
+        Assert.assertEquals(4, subnet.availableHosts);
+        Assert.assertEquals("255.255.255.252", subnet.getSubnetMask().toString());
+        Assert.assertEquals("192.168.1.0", subnet.getSubnetIP().toString());
+
+        subnet = new IPv4Subnet(new IPv4Address("192.168.0.1"), new IPv4Address("192.168.1.120"));
+        Assert.assertEquals(512, subnet.availableHosts);
+        Assert.assertEquals("255.255.254.0", subnet.getSubnetMask().toString());
+        Assert.assertEquals("192.168.0.0", subnet.getSubnetIP().toString());
+
+        subnet = new IPv4Subnet(new IPv4Address("192.168.0.1"), 512);
+        Assert.assertEquals(512, subnet.availableHosts);
+        Assert.assertEquals("255.255.254.0", subnet.getSubnetMask().toString());
+        Assert.assertEquals("192.168.0.0", subnet.getSubnetIP().toString());
+
+        subnet = new IPv4Subnet(new IPv4Address("162.162.0.1"), 512);
+        Assert.assertEquals(512, subnet.availableHosts);
+        Assert.assertEquals("255.255.254.0", subnet.getSubnetMask().toString());
+        Assert.assertEquals("162.162.0.0", subnet.getSubnetIP().toString());
+    }
+
 }

@@ -19,6 +19,15 @@ public class IPv4Address {
         this(i[0], i[1], i[2], i[3]);
     }
 
+    public IPv4Address(long binaryValue) {
+        this.binaryValue = binaryValue;
+        tern = new int[4];
+        tern[0] = (int) ((binaryValue & 0xFF000000) >> 24);
+        tern[1] = (int) ((binaryValue & 0x00FF0000) >> 16);
+        tern[2] = (int) ((binaryValue & 0x0000FF00) >> 8);
+        tern[3] = (int) (binaryValue & 0x000000FF);
+    }
+
     public IPv4Address(String value) {
         this(stringToIntArray(value));
     }
